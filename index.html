@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>门店收银</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">收</span>
+          <span class="brand-name">收钱吧</span>
+        </div>
+        <nav class="top-nav" aria-label="一级导航">
+          <a>首页</a>
+          <a>电子发票</a>
+          <a>电子小票</a>
+          <a>支付业务</a>
+          <a class="active">门店收银</a>
+          <a>管理功能</a>
+        </nav>
+        <div class="top-actions" aria-label="快捷操作">
+          <button class="icon-button" title="上传" aria-label="上传">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 16V4m0 0-4 4m4-4 4 4M5 14v5h14v-5" />
+            </svg>
+          </button>
+          <button class="icon-button" title="门店" aria-label="门店">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M8 10a4 4 0 1 1 8 0v6H8v-6Zm-2 9h12M9 19v-3m6 3v-3" />
+            </svg>
+          </button>
+          <button class="icon-button" title="通知" aria-label="通知">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9a6 6 0 0 1 12 0v5l2 3H4l2-3V9Zm4 10h4" />
+            </svg>
+          </button>
+          <span class="top-divider"></span>
+          <span class="user">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8a7 7 0 0 1 14 0" />
+            </svg>
+            admin
+          </span>
+          <button class="icon-button" title="语言" aria-label="语言">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m4 5 6 14M3 11h8m-1-6H3m9 14 5-10 5 10m-8-3h6" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="sider" aria-label="二级导航">
+          <a class="side-item active" data-page="settings" href="#settings">销售端设置</a>
+          <a class="side-item" data-page="orders" href="#orders">销售订单列表</a>
+        </aside>
+
+        <main class="content">
+          <section class="page-card page-panel active" data-panel="settings">
+            <div class="page-header">
+              <div>
+                <h1>销售端设置</h1>
+                <p>门店创建销售订单时的相关设置</p>
+              </div>
+              <div class="page-actions" id="pageActions">
+                <button class="btn primary" id="editBtn" type="button">编 辑</button>
+              </div>
+            </div>
+
+            <div class="body-grid">
+              <div class="settings">
+                <section class="setting-section">
+                  <div class="section-title">
+                    <h2>收款方式</h2>
+                  </div>
+                  <div class="setting-row payment-row">
+                    <div class="row-label">
+                      <strong>快速收款</strong>
+                      <span>仅需收款金额</span>
+                    </div>
+                    <div></div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="paymentLabel">付款金额1</span>
+                      <input class="edit-control text-input" data-edit-field="paymentLabel" value="付款金额1" />
+                    </div>
+                  </div>
+                </section>
+
+                <section class="setting-section">
+                  <div class="section-title">
+                    <h2>顾客信息</h2>
+                    <p>开单时需填写顾客信息</p>
+                  </div>
+                  <div class="setting-row">
+                    <div class="field-name">顾客名称</div>
+                    <div class="field-mode">
+                      <span class="read-value" data-field="customerMode">选填</span>
+                      <select class="edit-control select-control" data-edit-field="customerMode">
+                        <option>不使用</option>
+                        <option selected>选填</option>
+                        <option>必填</option>
+                      </select>
+                    </div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="customerLabel">顾客名称</span>
+                      <input class="edit-control text-input" data-edit-field="customerLabel" value="顾客名称" />
+                    </div>
+                  </div>
+                  <div class="setting-row">
+                    <div class="field-name">联系电话</div>
+                    <div class="field-mode">
+                      <span class="read-value" data-field="phoneMode">选填</span>
+                      <select class="edit-control select-control" data-edit-field="phoneMode">
+                        <option>不使用</option>
+                        <option selected>选填</option>
+                        <option>必填</option>
+                      </select>
+                    </div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="phoneLabel">联系电话</span>
+                      <input class="edit-control text-input" data-edit-field="phoneLabel" value="联系电话" />
+                    </div>
+                  </div>
+                </section>
+
+                <section class="setting-section">
+                  <div class="section-title">
+                    <h2>订单补充信息</h2>
+                    <p>开票时需填写的额外信息</p>
+                  </div>
+                  <div class="setting-row">
+                    <div class="field-name">业务单号</div>
+                    <div class="field-mode">
+                      <span class="read-value" data-field="businessMode">选填</span>
+                      <select class="edit-control select-control" data-edit-field="businessMode">
+                        <option>不使用</option>
+                        <option selected>选填</option>
+                        <option>必填</option>
+                      </select>
+                    </div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="businessLabel">业务单号</span>
+                      <input class="edit-control text-input" data-edit-field="businessLabel" value="业务单号" />
+                    </div>
+                  </div>
+                  <div class="setting-row">
+                    <div class="field-name">订单主题</div>
+                    <div class="field-mode">
+                      <span class="read-value" data-field="titleMode">选填</span>
+                      <select class="edit-control select-control" data-edit-field="titleMode">
+                        <option>不使用</option>
+                        <option selected>选填</option>
+                        <option>必填</option>
+                      </select>
+                    </div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="titleLabel">订单主题</span>
+                      <input class="edit-control text-input" data-edit-field="titleLabel" value="订单主题" />
+                    </div>
+                  </div>
+                  <div class="setting-row">
+                    <div class="field-name">订单描述</div>
+                    <div class="field-mode">
+                      <span class="read-value" data-field="descMode">选填</span>
+                      <select class="edit-control select-control" data-edit-field="descMode">
+                        <option>不使用</option>
+                        <option selected>选填</option>
+                        <option>必填</option>
+                      </select>
+                    </div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="descLabel">订单描述</span>
+                      <input class="edit-control text-input" data-edit-field="descLabel" value="订单描述" />
+                    </div>
+                  </div>
+                  <div class="setting-row">
+                    <div class="field-name">备注</div>
+                    <div class="field-mode">
+                      <span class="read-value" data-field="remarkMode">选填</span>
+                      <select class="edit-control select-control" data-edit-field="remarkMode">
+                        <option>不使用</option>
+                        <option selected>选填</option>
+                        <option>必填</option>
+                      </select>
+                    </div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="remarkLabel">备注</span>
+                      <input class="edit-control text-input" data-edit-field="remarkLabel" value="备注" />
+                    </div>
+                  </div>
+                  <div class="setting-row">
+                    <div class="field-name">扩展字段</div>
+                    <div class="field-mode">
+                      <span class="read-value" data-field="extraMode">必填</span>
+                      <select class="edit-control select-control" data-edit-field="extraMode">
+                        <option>不使用</option>
+                        <option>选填</option>
+                        <option selected>必填</option>
+                      </select>
+                    </div>
+                    <div class="row-display">
+                      <span class="display-prefix">展示为：</span>
+                      <span class="read-value" data-field="extraLabel">拓展字段</span>
+                      <input class="edit-control text-input" data-edit-field="extraLabel" value="拓展字段" />
+                    </div>
+                  </div>
+                </section>
+
+                <section class="setting-section expiry-section">
+                  <div class="section-title">
+                    <h2>订单有效期</h2>
+                    <p>订单创建后的可支付时长</p>
+                  </div>
+                  <div class="setting-row expiry-row">
+                    <div class="field-name">有效期</div>
+                    <div class="expiry-read">
+                      <span class="read-value" data-field="expiryText">7 天</span>
+                    </div>
+                    <div class="expiry-editor">
+                      <input
+                        class="edit-control number-input"
+                        id="expiryValue"
+                        type="number"
+                        min="1"
+                        step="1"
+                        value="7"
+                        inputmode="numeric"
+                        aria-label="有效期数值"
+                      />
+                      <select class="edit-control unit-select" id="expiryUnit" aria-label="有效期单位">
+                        <option value="minute">分钟</option>
+                        <option value="hour">小时</option>
+                        <option value="day" selected>天</option>
+                      </select>
+                      <div class="field-help" id="expiryHelp">最长 30 天</div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <aside class="preview-panel" aria-label="示意图">
+                <div class="preview-title">示意图：</div>
+                <div class="phone">
+                  <div class="phone-screen">
+                    <div class="phone-status">
+                      <span>9:41</span>
+                      <span class="status-icons">▮▮▮ ︱ ◓</span>
+                    </div>
+                    <div class="mini-nav">
+                      <span class="back">‹</span>
+                      <span>发起收款</span>
+                      <span class="more">••• ◎</span>
+                    </div>
+                    <div class="phone-body">
+                      <div class="phone-card amount-card">
+                        <label data-preview="paymentLabel">付款金额1</label>
+                        <div class="phone-input strong">
+                          <span>¥</span>
+                          <span>请输入付款金额1</span>
+                        </div>
+                      </div>
+                      <div class="phone-card form-card">
+                        <label data-preview="customerLabel">顾客名称</label>
+                        <div class="phone-input">请输入顾客名称</div>
+                        <label data-preview="phoneLabel">联系电话</label>
+                        <div class="phone-input">请输入联系电话</div>
+                        <label data-preview="businessLabel">业务单号</label>
+                        <div class="phone-input">请输入业务单号</div>
+                        <label data-preview="titleLabel">订单主题</label>
+                        <div class="phone-input">请输入订单主题</div>
+                        <label data-preview="descLabel">订单描述</label>
+                        <div class="phone-input textarea">请输入订单描述</div>
+                      </div>
+                    </div>
+                    <div class="phone-footer">
+                      <button>确认创建</button>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </section>
+
+          <section class="page-card page-panel list-page" data-panel="orders">
+            <div class="page-header compact">
+              <div>
+                <h1>销售订单列表</h1>
+                <p>门店远程收款订单查询</p>
+              </div>
+            </div>
+
+            <form class="query-filter" id="orderFilters">
+              <label class="filter-item">
+                <span>顾客名称</span>
+                <input name="customerName" type="text" />
+              </label>
+              <label class="filter-item">
+                <span>订单主题</span>
+                <input name="orderTitle" type="text" />
+              </label>
+              <label class="filter-item">
+                <span>订单描述</span>
+                <input name="orderDescription" type="text" />
+              </label>
+              <label class="filter-item">
+                <span>业务订单号</span>
+                <input name="businessOrderNo" type="text" />
+              </label>
+              <label class="filter-item">
+                <span>销售名称</span>
+                <input name="salesName" type="text" />
+              </label>
+              <label class="filter-item">
+                <span>门店</span>
+                <input name="store" type="text" />
+              </label>
+              <label class="filter-item">
+                <span>轻 POS 订单号</span>
+                <input name="liteposOrderNo" type="text" />
+              </label>
+              <label class="filter-item">
+                <span>订单状态</span>
+                <select name="orderStatus">
+                  <option value=""></option>
+                  <option value="待收款">待收款</option>
+                  <option value="收款中">收款中</option>
+                  <option value="收款成功">收款成功</option>
+                  <option value="已取消">已取消</option>
+                </select>
+              </label>
+              <label class="filter-item">
+                <span>退款状态</span>
+                <select name="refundStatus">
+                  <option value=""></option>
+                  <option value="未退款">未退款</option>
+                  <option value="部分退款">部分退款</option>
+                  <option value="已全额退款">已全额退款</option>
+                </select>
+              </label>
+              <label class="filter-item date-range">
+                <span>创建时间</span>
+                <span class="range-control">
+                  <input name="createdStart" type="date" aria-label="创建开始时间" />
+                  <em>至</em>
+                  <input name="createdEnd" type="date" aria-label="创建结束时间" />
+                </span>
+              </label>
+              <div class="filter-actions">
+                <button class="btn text" id="resetFilters" type="button">清空条件</button>
+                <button class="btn primary" type="submit">搜 索</button>
+              </div>
+            </form>
+
+            <div class="table-toolbar">
+              <span id="tableCount">共 0 条</span>
+              <div class="column-setting">
+                <button class="btn" id="columnSettingBtn" type="button">列设置</button>
+                <div class="column-panel" id="columnPanel" aria-label="列设置">
+                  <label><input type="checkbox" value="createdAt" checked /> 创建时间</label>
+                  <label><input type="checkbox" value="amount" checked /> 订单金额</label>
+                  <label><input type="checkbox" value="customerName" checked /> 顾客名称</label>
+                  <label><input type="checkbox" value="orderTitle" checked /> 订单主题</label>
+                  <label><input type="checkbox" value="orderDescription" checked /> 订单描述</label>
+                  <label><input type="checkbox" value="businessOrderNo" checked /> 业务订单号</label>
+                  <label><input type="checkbox" value="liteposOrderNo" checked /> 轻 POS 订单号</label>
+                  <label><input type="checkbox" value="store" checked /> 门店</label>
+                  <label><input type="checkbox" value="salesName" checked /> 销售名称</label>
+                  <label><input type="checkbox" value="orderStatus" checked /> 订单状态</label>
+                  <label><input type="checkbox" value="refundStatus" checked /> 退款状态</label>
+                  <label><input type="checkbox" value="completedAt" checked /> 完成时间</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="orders-table">
+                <thead>
+                  <tr>
+                    <th data-column="createdAt">创建时间</th>
+                    <th class="amount" data-column="amount">订单金额</th>
+                    <th data-column="customerName">顾客名称</th>
+                    <th data-column="orderTitle">订单主题</th>
+                    <th data-column="orderDescription">订单描述</th>
+                    <th data-column="businessOrderNo">业务订单号</th>
+                    <th data-column="liteposOrderNo">轻 POS 订单号</th>
+                    <th data-column="store">门店</th>
+                    <th data-column="salesName">销售名称</th>
+                    <th data-column="orderStatus">订单状态</th>
+                    <th data-column="refundStatus">退款状态</th>
+                    <th data-column="completedAt">完成时间</th>
+                    <th class="actions-column">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersBody"></tbody>
+              </table>
+            </div>
+
+            <div class="pagination">
+              <span id="paginationText">第 1-0 条 / 共 0 条</span>
+              <button class="pager-btn" type="button" disabled>上一页</button>
+              <button class="pager-btn active" type="button">1</button>
+              <button class="pager-btn" type="button" disabled>下一页</button>
+            </div>
+          </section>
+
+          <section class="page-card page-panel detail-page" data-panel="detail">
+            <div class="page-header compact detail-header">
+              <div>
+                <nav class="breadcrumb" aria-label="面包屑">
+                  <span class="breadcrumb-home" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" focusable="false">
+                      <path d="M2.5 7.1 8 2.4l5.5 4.7v6.5H9.8V9.8H6.2v3.8H2.5V7.1Z" />
+                    </svg>
+                  </span>
+                  <span class="breadcrumb-separator">/</span>
+                  <button class="breadcrumb-link" id="backToOrders" type="button">销售订单列表</button>
+                  <span class="breadcrumb-separator">/</span>
+                  <span class="breadcrumb-current">订单详情</span>
+                </nav>
+                <h1>销售订单详情</h1>
+              </div>
+              <div class="page-actions" id="detailActions"></div>
+            </div>
+            <div id="detailContent"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">保存成功</div>
+    <div class="modal-mask" id="paymentLinkModal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="paymentLinkTitle">
+        <div class="modal-header">
+          <h2 id="paymentLinkTitle">付款链接</h2>
+          <button class="modal-close" id="closePaymentLink" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-field">
+            <label>订单金额</label>
+            <span id="modalAmount">-</span>
+          </div>
+          <div class="modal-field">
+            <label>顾客名称</label>
+            <span id="modalCustomerName">-</span>
+          </div>
+          <div class="modal-field">
+            <label>订单主题</label>
+            <span id="modalOrderTitle">-</span>
+          </div>
+          <div class="modal-field">
+            <label>订单描述</label>
+            <span id="modalOrderDescription">-</span>
+          </div>
+          <div class="modal-field">
+            <label>付款链接</label>
+            <div class="payment-link-row">
+              <button class="payment-link-text" id="paymentLinkText" type="button"></button>
+              <button class="btn" id="copyPaymentLink" type="button">复 制</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn primary" id="backPaymentLink" type="button">返 回</button>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
