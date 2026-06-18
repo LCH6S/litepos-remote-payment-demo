@@ -144,6 +144,7 @@ const orderDetails = {
     validDuration: "7 天",
     expireAt: "2026-06-24 10:12:36",
     paidAmount: "-",
+    refundedAmount: "-",
     refundStatus: "未退款",
     transactions: [],
   },
@@ -152,6 +153,7 @@ const orderDetails = {
     validDuration: "7 天",
     expireAt: "2026-06-24 09:48:20",
     paidAmount: "¥100,000.00",
+    refundedAmount: "-",
     refundStatus: "未退款",
     transactions: [
       {
@@ -172,6 +174,7 @@ const orderDetails = {
     validDuration: "7 天",
     expireAt: "2026-06-23 18:31:07",
     paidAmount: "¥56,800.00",
+    refundedAmount: "-",
     refundStatus: "未退款",
     transactions: [
       {
@@ -192,6 +195,7 @@ const orderDetails = {
     validDuration: "7 天",
     expireAt: "2026-06-22 14:22:51",
     paidAmount: "-",
+    refundedAmount: "-",
     refundStatus: "未退款",
     transactions: [],
   },
@@ -200,6 +204,7 @@ const orderDetails = {
     validDuration: "7 天",
     expireAt: "2026-06-21 16:08:19",
     paidAmount: "¥38,100.00",
+    refundedAmount: "¥38,100.00",
     refundStatus: "部分退款",
     transactions: [
       {
@@ -220,6 +225,7 @@ const orderDetails = {
     validDuration: "7 天",
     expireAt: "2026-06-20 13:45:26",
     paidAmount: "¥0.00",
+    refundedAmount: "¥42,500.00",
     refundStatus: "已全额退款",
     transactions: [
       {
@@ -240,6 +246,7 @@ const orderDetails = {
     validDuration: "7 天",
     expireAt: "2026-06-19 11:09:18",
     paidAmount: "¥315,000.00",
+    refundedAmount: "-",
     refundStatus: "未退款",
     transactions: [
       {
@@ -563,6 +570,7 @@ function getOrderDetail(orderNo) {
     validDuration: "-",
     expireAt: "-",
     paidAmount: "-",
+    refundedAmount: "-",
     refundStatus: order.refundStatus || "未退款",
     transactions: [],
     ...orderDetails[orderNo],
@@ -630,17 +638,24 @@ function getDetailRefundSubStatus(order) {
   return order.transactions.find((record) => refundSubStatuses.includes(record.status))?.status || "";
 }
 
+function renderRefundSubStatus(order, refundSubStatus) {
+  if (!refundSubStatus) return "";
+  const amount = order.refundedAmount && order.refundedAmount !== "-" ? ` ${order.refundedAmount}` : "";
+  return `
+    <small>
+      <span class="status ${statusClass(refundSubStatus)}">${escapeHtml(refundSubStatus)}</span>
+      ${amount ? `<span class="refund-sub-amount">${escapeHtml(amount)}</span>` : ""}
+    </small>
+  `;
+}
+
 function renderDetailStatus(order) {
   const refundSubStatus = getDetailRefundSubStatus(order);
 
   return `
     <strong>
       <span class="status ${statusClass(order.orderStatus)}">${escapeHtml(order.orderStatus)}</span>
-      ${
-        refundSubStatus
-          ? `<small><span class="status ${statusClass(refundSubStatus)}">${escapeHtml(refundSubStatus)}</span></small>`
-          : ""
-      }
+      ${renderRefundSubStatus(order, refundSubStatus)}
     </strong>
   `;
 }
