@@ -2,18 +2,25 @@ const state = {
   paymentLabel: "付款金额1",
   customerMode: "选填",
   customerLabel: "顾客名称",
+  customerVisible: "展示",
   phoneMode: "选填",
   phoneLabel: "联系电话",
+  phoneVisible: "展示",
   businessMode: "选填",
   businessLabel: "业务单号",
+  businessVisible: "展示",
   titleMode: "选填",
   titleLabel: "订单主题",
+  titleVisible: "展示",
   descMode: "选填",
   descLabel: "订单描述",
+  descVisible: "展示",
   remarkMode: "选填",
   remarkLabel: "备注",
+  remarkVisible: "展示",
   extraMode: "必填",
   extraLabel: "拓展字段",
+  extraVisible: "展示",
   expiryValue: "7",
   expiryUnit: "day",
 };
@@ -32,21 +39,24 @@ const maxByUnit = {
 
 const orders = [
   {
+    internalOrderNo: "1001247732345132",
     createdAt: "2026-06-17 10:12:36",
     amount: "¥90,100.00",
     customerName: "王先生",
     orderTitle: "拍品尾款",
     orderDescription: "春拍 Lot 215 尾款",
     businessOrderNo: "SO202606170001",
-    liteposOrderNo: "790324770900685",
+    liteposOrderNo: "-",
     store: "上海一号门店",
     salesName: "李明",
+    paymentMethod: "远程收款",
     orderStatus: "待收款",
     refundStatus: "未退款",
     completedAt: "-",
     paymentLink: "https://i.wosai.cn/5156Bd",
   },
   {
+    internalOrderNo: "1001247732345133",
     createdAt: "2026-06-17 09:48:20",
     amount: "¥218,000.00",
     customerName: "陈女士",
@@ -56,12 +66,14 @@ const orders = [
     liteposOrderNo: "790324770903304",
     store: "北京旗舰店",
     salesName: "周倩",
+    paymentMethod: "远程收款",
     orderStatus: "收款中",
     refundStatus: "未退款",
     completedAt: "-",
     paymentLink: "https://i.wosai.cn/8K2mQ9",
   },
   {
+    internalOrderNo: "1001247732345134",
     createdAt: "2026-06-16 18:31:07",
     amount: "¥56,800.00",
     customerName: "赵先生",
@@ -71,12 +83,14 @@ const orders = [
     liteposOrderNo: "790324770666999",
     store: "上海一号门店",
     salesName: "王珊",
+    paymentMethod: "POS 收款",
     orderStatus: "收款成功",
     refundStatus: "未退款",
     completedAt: "2026-06-16 19:02:44",
     paymentLink: "https://i.wosai.cn/n7X4Pa",
   },
   {
+    internalOrderNo: "1001247732345135",
     createdAt: "2026-06-15 14:22:51",
     amount: "¥130,000.00",
     customerName: "林女士",
@@ -86,12 +100,14 @@ const orders = [
     liteposOrderNo: "790324770663336",
     store: "深圳湾门店",
     salesName: "陈杰",
+    paymentMethod: "当面收款",
     orderStatus: "已取消",
     refundStatus: "未退款",
     completedAt: "-",
     paymentLink: "https://i.wosai.cn/3hR8Tq",
   },
   {
+    internalOrderNo: "1001247732345136",
     createdAt: "2026-06-14 16:08:19",
     amount: "¥76,200.00",
     customerName: "沈女士",
@@ -101,12 +117,14 @@ const orders = [
     liteposOrderNo: "790324770664300",
     store: "广州中心店",
     salesName: "唐宁",
+    paymentMethod: "远程收款",
     orderStatus: "收款成功",
     refundStatus: "部分退款",
     completedAt: "2026-06-14 16:39:52",
     paymentLink: "https://i.wosai.cn/K6d2Vz",
   },
   {
+    internalOrderNo: "1001247732345137",
     createdAt: "2026-06-13 13:45:26",
     amount: "¥42,500.00",
     customerName: "吴先生",
@@ -116,12 +134,14 @@ const orders = [
     liteposOrderNo: "790324770664358",
     store: "杭州中心店",
     salesName: "刘洋",
+    paymentMethod: "POS 收款",
     orderStatus: "收款成功",
     refundStatus: "已全额退款",
     completedAt: "2026-06-13 14:02:37",
     paymentLink: "https://i.wosai.cn/m9Y5Lc",
   },
   {
+    internalOrderNo: "1001247732345138",
     createdAt: "2026-06-12 11:09:18",
     amount: "¥315,000.00",
     customerName: "郑女士",
@@ -131,6 +151,7 @@ const orders = [
     liteposOrderNo: "790324770660072",
     store: "成都中心店",
     salesName: "高远",
+    paymentMethod: "当面收款",
     orderStatus: "收款成功",
     refundStatus: "未退款",
     completedAt: "-",
@@ -139,7 +160,7 @@ const orders = [
 ];
 
 const orderDetails = {
-  "790324770900685": {
+  "1001247732345132": {
     phone: "1234323423",
     validDuration: "7 天",
     expireAt: "2026-06-24 10:12:36",
@@ -449,6 +470,12 @@ function matchExact(source, keyword) {
   return normalize(source) === value;
 }
 
+function findOrder(identifier) {
+  return orders.find(
+    (item) => item.internalOrderNo === identifier || (item.liteposOrderNo !== "-" && item.liteposOrderNo === identifier),
+  );
+}
+
 function matchDateRange(createdAt, start, end) {
   const date = createdAt.slice(0, 10);
   if (start && date < start) return false;
@@ -487,7 +514,7 @@ function statusClass(status) {
 }
 
 function canViewPaymentLink(order) {
-  return order.orderStatus === "待收款" || order.orderStatus === "收款中";
+  return order.paymentMethod === "远程收款" && (order.orderStatus === "待收款" || order.orderStatus === "收款中");
 }
 
 function renderOrders() {
@@ -508,19 +535,19 @@ function renderOrders() {
               <td class="truncate" data-column="orderTitle" title="${order.orderTitle}">${order.orderTitle}</td>
               <td class="truncate" data-column="orderDescription" title="${order.orderDescription}">${order.orderDescription}</td>
               <td data-column="businessOrderNo">${order.businessOrderNo}</td>
-              <td data-column="liteposOrderNo">${order.liteposOrderNo}</td>
               <td data-column="store">${order.store}</td>
               <td data-column="salesName">${order.salesName}</td>
               <td data-column="orderStatus"><span class="status ${statusClass(order.orderStatus)}">${order.orderStatus}</span></td>
               <td data-column="refundStatus"><span class="status ${statusClass(order.refundStatus)}">${order.refundStatus}</span></td>
               <td data-column="completedAt">${order.completedAt}</td>
+              <td data-column="internalOrderNo">${order.internalOrderNo}</td>
               <td class="actions-cell">
                 ${
                   canViewLink
-                    ? `<button class="link-action" data-payment-link="${order.liteposOrderNo}" type="button">查看付款链接</button>`
+                    ? `<button class="link-action" data-payment-link="${order.internalOrderNo}" type="button">查看付款链接</button>`
                     : ""
                 }
-                <button class="link-action" data-detail-order="${order.liteposOrderNo}" type="button">详情</button>
+                <button class="link-action" data-detail-order="${order.internalOrderNo}" type="button">详情</button>
               </td>
             </tr>
           `;
@@ -548,7 +575,7 @@ function syncFilterFloatingLabels() {
 }
 
 function openPaymentLink(orderNo) {
-  const order = orders.find((item) => item.liteposOrderNo === orderNo);
+  const order = findOrder(orderNo);
   if (!order) return;
   currentPaymentLink = order.paymentLink;
   modalAmount.textContent = order.amount;
@@ -562,7 +589,7 @@ function openPaymentLink(orderNo) {
 }
 
 function getOrderDetail(orderNo) {
-  const order = orders.find((item) => item.liteposOrderNo === orderNo);
+  const order = findOrder(orderNo);
   if (!order) return null;
   return {
     ...order,
@@ -573,7 +600,8 @@ function getOrderDetail(orderNo) {
     refundedAmount: "-",
     refundStatus: order.refundStatus || "未退款",
     transactions: [],
-    ...orderDetails[orderNo],
+    ...orderDetails[order.internalOrderNo],
+    ...orderDetails[order.liteposOrderNo],
   };
 }
 
@@ -620,15 +648,22 @@ function renderTransactionRows(transactions) {
 }
 
 function renderPaymentLinkSection(order) {
-  if (!canViewPaymentLink(order)) return "";
+  const shouldShowLink = canViewPaymentLink(order);
 
   return `
     <section class="detail-section">
-      <h2 class="detail-section-title">付款链接</h2>
-      <div class="detail-link-row">
-        <button class="detail-link-text" data-copy-payment-link="${escapeHtml(order.liteposOrderNo)}" type="button" title="${escapeHtml(order.paymentLink)}">${escapeHtml(order.paymentLink)}</button>
-        <button class="btn" data-copy-payment-link="${escapeHtml(order.liteposOrderNo)}" type="button">复 制</button>
+      <h2 class="detail-section-title">收款方式</h2>
+      <div class="detail-method-row">
+        <span>${escapeHtml(order.paymentMethod)}</span>
       </div>
+      ${
+        shouldShowLink
+          ? `<div class="detail-link-row">
+              <button class="detail-link-text" data-copy-payment-link="${escapeHtml(order.internalOrderNo)}" type="button" title="${escapeHtml(order.paymentLink)}">${escapeHtml(order.paymentLink)}</button>
+              <button class="btn" data-copy-payment-link="${escapeHtml(order.internalOrderNo)}" type="button">复 制</button>
+            </div>`
+          : ""
+      }
     </section>
   `;
 }
@@ -668,22 +703,18 @@ function renderOrderDetail(orderNo = currentDetailOrderNo) {
     return;
   }
 
-  currentDetailOrderNo = order.liteposOrderNo;
+  currentDetailOrderNo = order.internalOrderNo;
   detailActions.innerHTML = "";
 
   detailContent.innerHTML = `
     <div class="detail-overview">
       <div class="overview-item">
+        <label>创建时间</label>
+        <strong>${escapeHtml(order.createdAt)}</strong>
+      </div>
+      <div class="overview-item">
         <label>订单金额</label>
         <strong class="amount-value">${escapeHtml(order.amount)}</strong>
-      </div>
-      <div class="overview-item">
-        <label>顾客名称</label>
-        <strong>${escapeHtml(order.customerName)}</strong>
-      </div>
-      <div class="overview-item">
-        <label>订单有效期</label>
-        <strong>${escapeHtml(order.validDuration)}</strong>
       </div>
       <div class="overview-item status-overview">
         <label>订单状态</label>
@@ -700,13 +731,13 @@ function renderOrderDetail(orderNo = currentDetailOrderNo) {
         ${renderDetailField("联系电话", order.phone)}
         ${renderDetailField("订单主题", order.orderTitle)}
         ${renderDetailField("订单描述", order.orderDescription)}
+        ${renderDetailField("内部订单号", order.internalOrderNo)}
         ${renderDetailField("轻 POS 订单号", order.liteposOrderNo)}
         ${renderDetailField("业务订单号", order.businessOrderNo)}
         ${renderDetailField("门店", order.store)}
         ${renderDetailField("销售名称", order.salesName)}
         ${renderDetailField("创建时间", order.createdAt)}
         ${renderDetailField("完成时间", order.completedAt)}
-        ${renderDetailField("已收金额", order.paidAmount)}
       </div>
     </section>
 
@@ -735,8 +766,9 @@ function renderOrderDetail(orderNo = currentDetailOrderNo) {
 }
 
 function showDetail(orderNo) {
+  const order = findOrder(orderNo);
   renderOrderDetail(orderNo);
-  showPage("detail", `detail-${orderNo}`);
+  showPage("detail", `detail-${order?.internalOrderNo || orderNo}`);
 }
 
 function closePaymentLinkModal() {
@@ -763,7 +795,7 @@ async function copyText(text) {
 }
 
 function copyPaymentLinkByOrderNo(orderNo) {
-  const order = orders.find((item) => item.liteposOrderNo === orderNo);
+  const order = findOrder(orderNo);
   if (order) copyText(order.paymentLink);
 }
 
