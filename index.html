@@ -111,6 +111,14 @@
                       <span class="read-value" data-field="customerLabel">顾客名称</span>
                       <input class="edit-control text-input" data-edit-field="customerLabel" value="顾客名称" />
                     </div>
+                    <div class="customer-visibility">
+                      <span class="display-prefix">展示给顾客：</span>
+                      <span class="read-value" data-field="customerVisible">展示</span>
+                      <select class="edit-control select-control" data-edit-field="customerVisible">
+                        <option selected>展示</option>
+                        <option>不展示</option>
+                      </select>
+                    </div>
                   </div>
                   <div class="setting-row">
                     <div class="field-name">联系电话</div>
@@ -126,6 +134,14 @@
                       <span class="display-prefix">展示为：</span>
                       <span class="read-value" data-field="phoneLabel">联系电话</span>
                       <input class="edit-control text-input" data-edit-field="phoneLabel" value="联系电话" />
+                    </div>
+                    <div class="customer-visibility">
+                      <span class="display-prefix">展示给顾客：</span>
+                      <span class="read-value" data-field="phoneVisible">展示</span>
+                      <select class="edit-control select-control" data-edit-field="phoneVisible">
+                        <option selected>展示</option>
+                        <option>不展示</option>
+                      </select>
                     </div>
                   </div>
                 </section>
@@ -150,6 +166,14 @@
                       <span class="read-value" data-field="businessLabel">业务单号</span>
                       <input class="edit-control text-input" data-edit-field="businessLabel" value="业务单号" />
                     </div>
+                    <div class="customer-visibility">
+                      <span class="display-prefix">展示给顾客：</span>
+                      <span class="read-value" data-field="businessVisible">展示</span>
+                      <select class="edit-control select-control" data-edit-field="businessVisible">
+                        <option selected>展示</option>
+                        <option>不展示</option>
+                      </select>
+                    </div>
                   </div>
                   <div class="setting-row">
                     <div class="field-name">订单主题</div>
@@ -165,6 +189,14 @@
                       <span class="display-prefix">展示为：</span>
                       <span class="read-value" data-field="titleLabel">订单主题</span>
                       <input class="edit-control text-input" data-edit-field="titleLabel" value="订单主题" />
+                    </div>
+                    <div class="customer-visibility">
+                      <span class="display-prefix">展示给顾客：</span>
+                      <span class="read-value" data-field="titleVisible">展示</span>
+                      <select class="edit-control select-control" data-edit-field="titleVisible">
+                        <option selected>展示</option>
+                        <option>不展示</option>
+                      </select>
                     </div>
                   </div>
                   <div class="setting-row">
@@ -182,6 +214,14 @@
                       <span class="read-value" data-field="descLabel">订单描述</span>
                       <input class="edit-control text-input" data-edit-field="descLabel" value="订单描述" />
                     </div>
+                    <div class="customer-visibility">
+                      <span class="display-prefix">展示给顾客：</span>
+                      <span class="read-value" data-field="descVisible">展示</span>
+                      <select class="edit-control select-control" data-edit-field="descVisible">
+                        <option selected>展示</option>
+                        <option>不展示</option>
+                      </select>
+                    </div>
                   </div>
                   <div class="setting-row">
                     <div class="field-name">备注</div>
@@ -198,6 +238,14 @@
                       <span class="read-value" data-field="remarkLabel">备注</span>
                       <input class="edit-control text-input" data-edit-field="remarkLabel" value="备注" />
                     </div>
+                    <div class="customer-visibility">
+                      <span class="display-prefix">展示给顾客：</span>
+                      <span class="read-value" data-field="remarkVisible">展示</span>
+                      <select class="edit-control select-control" data-edit-field="remarkVisible">
+                        <option selected>展示</option>
+                        <option>不展示</option>
+                      </select>
+                    </div>
                   </div>
                   <div class="setting-row">
                     <div class="field-name">扩展字段</div>
@@ -213,6 +261,14 @@
                       <span class="display-prefix">展示为：</span>
                       <span class="read-value" data-field="extraLabel">拓展字段</span>
                       <input class="edit-control text-input" data-edit-field="extraLabel" value="拓展字段" />
+                    </div>
+                    <div class="customer-visibility">
+                      <span class="display-prefix">展示给顾客：</span>
+                      <span class="read-value" data-field="extraVisible">展示</span>
+                      <select class="edit-control select-control" data-edit-field="extraVisible">
+                        <option selected>展示</option>
+                        <option>不展示</option>
+                      </select>
                     </div>
                   </div>
                 </section>
@@ -373,12 +429,12 @@
                   <label><input type="checkbox" value="orderTitle" checked /> 订单主题</label>
                   <label><input type="checkbox" value="orderDescription" checked /> 订单描述</label>
                   <label><input type="checkbox" value="businessOrderNo" checked /> 业务订单号</label>
-                  <label><input type="checkbox" value="liteposOrderNo" checked /> 轻 POS 订单号</label>
                   <label><input type="checkbox" value="store" checked /> 门店</label>
                   <label><input type="checkbox" value="salesName" checked /> 销售名称</label>
                   <label><input type="checkbox" value="orderStatus" checked /> 订单状态</label>
                   <label><input type="checkbox" value="refundStatus" checked /> 退款状态</label>
                   <label><input type="checkbox" value="completedAt" checked /> 完成时间</label>
+                  <label><input type="checkbox" value="internalOrderNo" checked /> 内部订单号</label>
                 </div>
               </div>
             </div>
@@ -393,12 +449,12 @@
                     <th data-column="orderTitle">订单主题</th>
                     <th data-column="orderDescription">订单描述</th>
                     <th data-column="businessOrderNo">业务订单号</th>
-                    <th data-column="liteposOrderNo">轻 POS 订单号</th>
                     <th data-column="store">门店</th>
                     <th data-column="salesName">销售名称</th>
                     <th data-column="orderStatus">订单状态</th>
                     <th data-column="refundStatus">退款状态</th>
                     <th data-column="completedAt">完成时间</th>
+                    <th data-column="internalOrderNo">内部订单号</th>
                     <th class="actions-column">操作</th>
                   </tr>
                 </thead>
